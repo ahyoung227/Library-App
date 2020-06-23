@@ -49,12 +49,9 @@ function saveInputToMyLibrary() {
 
 //save new book object to local storage
 function saveInStorage() {
+    localStorage.clear();
     localStorage.setItem("createdBook", JSON.stringify(myLibrary));
     displayCard();
-}
-
-function deleteFromStorage() {
-
 }
 
 //display new book objects in the DOM
@@ -84,13 +81,15 @@ function toggleReadbtn(event) {
     let toggleIndex = event.target.parentElement.parentElement.dataset.index;
     myLibrary[toggleIndex].toogleRead()
     displayCard();
+    saveInStorage()
 }
 
 //when user clicks delete button, it removes the book info in the local storage and displays it.
 function deleteCard(event) {
     let cardIndex = event.target.parentElement.parentElement.dataset.index;
-    myLibrary.splice(0, 1);
+    myLibrary.splice(cardIndex, 1);
     displayCard();
+    saveInStorage()
 }
 
 //When user clicks the button, system shows/closes the form group
@@ -102,6 +101,7 @@ function closeForm() {
     document.getElementById("myform").style.display = "none";
 }
 
+textFit(document.querySelector("h1"));
 
 
 
