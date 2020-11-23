@@ -4,7 +4,7 @@
 
 ## About The Project
 
-<img src="/library-app.gif">
+<img src="/library-app.png">
 
 ### Built With
 
