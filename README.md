@@ -4,7 +4,7 @@
 
 ## About The Project
 
-<a href="https://ahyoung227.github.io/library-App/><img src="/Library-app.png"></a>
+<a href="https://ahyoung227.github.io/library-App/"><img src="/Library-app.png"></a>
 
 ### Built With
 
