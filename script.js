@@ -5,20 +5,20 @@ function Book(title, author, page, read) {
     this.read = read
 }
 
-let myLibrary = [];
-
-let exisitingBook = new Book("All About Love", "by bell hooks", "234", false)
-myLibrary.push(exisitingBook)
-
-displayCard();
-
 //prototype
 Book.prototype.toogleRead = function() { 
     this.read = !this.read;
 }
 
+let myLibrary = [];
+
+let exisitingBook = new Book("All About Love", "by bell hooks", "234", false)
+myLibrary.push(exisitingBook)
+saveInStorage()
+
 //when user writes input and submits, system saves the input to the local storage and an array.
-function saveInputToMyLibrary() {
+function saveInputToMyLibrary(e) {
+    e.preventDefault();
     let title= document.getElementById('title').value;
     let author=  document.getElementById('author').value;
     let page= document.getElementById('page').value;
@@ -45,29 +45,33 @@ function saveInputToMyLibrary() {
     //add new book object to the 'mylibrary' array
     myLibrary.push(createdBook);
     saveInStorage()
+    displayCard()
 }
 
 //save new book object to local storage
 function saveInStorage() {
     localStorage.clear();
     localStorage.setItem("createdBook", JSON.stringify(myLibrary));
-    displayCard();
+    displayCard()
 }
 
 //display new book objects in the DOM
 function displayCard() {
-    let card =``
-    for (var i= 0; i < myLibrary.length; i++) {
+    let card = "";
+    let getData = localStorage.getItem("createdBook");
+    let storedData = JSON.parse(getData);
+
+    for (let i= 0; i < storedData.length; i++) {
         let newCard= `
             <div class="card col-sm-4 text-center rounded mr-2 mt-3 bg-info" data-index=${i}>
                 <div class="card-body d-flex flex-column">
-                    <h1 class="card-title">${myLibrary[i].title}</h1>
+                    <h1 class="card-title">${storedData[i].title}</h1>
                     <svg class="bi bi-x-circle-fill" width="1em" height="1em" onclick="deleteCard(event)" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.146-3.146a.5.5 0 0 0-.708-.708L8 7.293 4.854 4.146a.5.5 0 1 0-.708.708L7.293 8l-3.147 3.146a.5.5 0 0 0 .708.708L8 8.707l3.146 3.147a.5.5 0 0 0 .708-.708L8.707 8l3.147-3.146z"/>
                         </svg>
-                    <p class="card-text">by ${myLibrary[i].author}</p>
-                    <p class="card-text mt-auto"><small class="text-muted">${myLibrary[i].page} pages</small></p>
-                    <button class="btn btn-light" onclick="toggleReadbtn(event)">${myLibrary[i].read ? 'read' : 'unread'}</button>
+                    <p class="card-text">by ${storedData[i].author}</p>
+                    <p class="card-text mt-auto"><small class="text-muted">${storedData[i].page} pages</small></p>
+                    <button class="btn btn-light" onclick="toggleReadbtn(event)">${storedData[i].read ? 'read' : 'unread'}</button>
                 </div>
             </div>
             `;
@@ -80,7 +84,6 @@ function displayCard() {
 function toggleReadbtn(event) {
     let toggleIndex = event.target.parentElement.parentElement.dataset.index;
     myLibrary[toggleIndex].toogleRead()
-    displayCard();
     saveInStorage()
 }
 
@@ -88,7 +91,6 @@ function toggleReadbtn(event) {
 function deleteCard(event) {
     let cardIndex = event.target.parentElement.parentElement.dataset.index;
     myLibrary.splice(cardIndex, 1);
-    displayCard();
     saveInStorage()
 }
 
@@ -101,7 +103,6 @@ function closeForm() {
     document.getElementById("myform").style.display = "none";
 }
 
-textFit(document.querySelector("h1"));
 
 
 
