@@ -4,7 +4,8 @@
 
 ## About The Project
 
-<img src="/Library-app.png">
+<a href="https://ahyoung227.github.io/library-App/"><img src="/Library-app.png" width="500px" height="300px"></a>
+<a href="https://ahyoung227.github.io/library-App/"> Link</a>
 
 ### Built With
 
